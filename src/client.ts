@@ -74,6 +74,8 @@ export async function register(username :string, challenge :string, options? :Re
     if(!utils.isBase64url(challenge))
         throw new Error('Provided challenge is not properly encoded in Base64url')
 
+    const transports = options.excludeCredentialIds ? await getTransports(options.authenticatorType ?? "auto") : undefined
+
     const creationOptions :PublicKeyCredentialCreationOptions = {
         challenge: utils.parseBase64url(challenge),
         rp: {
@@ -94,7 +96,14 @@ export async function register(username :string, challenge :string, options? :Re
             userVerification: options.userVerification ?? "required", // Webauthn default is "preferred"
             authenticatorAttachment: await getAuthAttachment(options.authenticatorType ?? "auto"),
         },
-        attestation: "direct" // options.attestation ? "direct" : "none"
+        attestation: "direct", // options.attestation ? "direct" : "none"
+        excludeCredentials: options.excludeCredentialIds?.map((id) => {
+            return {
+                id: utils.parseBase64url(id),
+                type: "public-key",
+                transports: transports,
+            }
+        }),
     }
 
     if(options.debug)
