@@ -15,6 +15,8 @@ export async function getCrypto() {
 }
 */
 
+import { webcrypto as crypto } from "crypto"
+
 
 export function randomChallenge() {
     return crypto.randomUUID()
