@@ -96,7 +96,7 @@ export async function register(username :string, challenge :string, options? :Re
             userVerification: options.userVerification ?? "required", // Webauthn default is "preferred"
             authenticatorAttachment: await getAuthAttachment(options.authenticatorType ?? "auto"),
         },
-        attestation: "direct", // options.attestation ? "direct" : "none"
+        attestation: options.attestation ? "direct" : "none",
         excludeCredentials: options.excludeCredentialIds?.map((id) => {
             return {
                 id: utils.parseBase64url(id),
