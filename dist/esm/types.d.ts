@@ -9,6 +9,7 @@ export interface CommonOptions {
 }
 export interface AuthenticateOptions extends CommonOptions {
     mediation?: CredentialMediationRequirement;
+    transports?: AuthenticatorTransport[];
 }
 export interface AuthenticationEncoded {
     credentialId: string;

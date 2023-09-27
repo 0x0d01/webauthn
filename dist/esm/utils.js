@@ -13,7 +13,7 @@ export async function getCrypto() {
     return webCrypto
 }
 */
-// import { webcrypto as crypto } from "node:crypto"
+// import { webcrypto as crypto } from "crypto"
 export function randomChallenge() {
     return crypto.randomUUID();
 }

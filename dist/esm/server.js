@@ -1,6 +1,6 @@
 import { parseAuthentication, parseRegistration } from "./parsers.js";
 import * as utils from './utils.js';
-// import { webcrypto as crypto} from "node:crypto"
+// import { webcrypto as crypto } from "crypto"
 async function isValid(validator, value) {
     if (typeof validator === 'function') {
         const res = validator(value);

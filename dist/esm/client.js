@@ -146,7 +146,10 @@ export async function authenticate(credentialIds, challenge, options) {
     options = options ?? {};
     if (!utils.isBase64url(challenge))
         throw new Error('Provided challenge is not properly encoded in Base64url');
-    const transports = await getTransports(options.authenticatorType ?? "auto");
+    let transports = await getTransports(options.authenticatorType ?? "auto");
+    if (options.transports) {
+        transports = transports.filter(v => options?.transports.includes(v));
+    }
     let authOptions = {
         challenge: utils.parseBase64url(challenge),
         rpId: window.location.hostname,
